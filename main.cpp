@@ -2,26 +2,37 @@
 
 using namespace std;
 
-void binaryPrint(int decimal, string &binary){
-    if (decimal <= 1){
-        binary += (char)(decimal + '0');
+bool bears(int n){
+    int factor = (n % 10)*((n % 100)/10);
+    if (n == 42){
+        return true;
+    }
+    else if (n < 42){
+        return false;
+    }
+    else if (((n % 5) == 0) && (bears(n - 42))){
+        return true;
+    }
+    else if ((factor != 0) && (((n % 4) == 0) || (n % 3) == 0) && (bears(n - factor))){
+        return true;
+    }
+    else if ((n % 2) == 0 && bears(n / 2)){
+        return bears(n - (n / 2));
     }
     else {
-        binaryPrint(decimal/2, binary);
-        if (decimal % 2){
-            binary += '1';
-        }
-        else {
-            binary += '0';
-        }
+        return false;
     }
 }
 
-int main() {
-    int decimal;
-    string binary = "";
-    cout << "Please enter the decimal number: ";
-    cin >> decimal;
-    binaryPrint(decimal, binary);
-    cout << binary << endl;
+int main(){
+    int n;
+    cout << "Enter the number of teddy bears: ";
+    cin >> n;
+    bears(n);
+    if (bears(n)){
+        cout << "it is possible to win" << endl;
+    }
+    else{
+        cout << "it is not possible to win";
+    }
 }
