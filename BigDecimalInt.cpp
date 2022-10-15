@@ -9,18 +9,18 @@ BigDecimalInt::BigDecimalInt(int decInt) {
     int index;
     if( decInt<0){
         decInt*=-1;
-        sign =true;
+        Sign =true;
         numberOfDigits =int(log10(decInt) + 1);
         index=numberOfDigits-1;
     }
     else{
-        sign= false;
+        Sign= false;
         numberOfDigits =int(log10(decInt) + 1);
         index= numberOfDigits-1;
 
     }
     while(decInt!=0){
-        num[index]=decInt%10
+        num[index]=decInt%10;
         decInt = decInt/10;
         index--;
     }
@@ -36,10 +36,10 @@ BigDecimalInt::BigDecimalInt(string decStr){
     else {
         num = decStr;
         if(decStr[0]=='-'){
-            sign= true;
+            Sign= true;
         }
         else{
-            sign = false;
+            Sign = false;
         }
     }
 }

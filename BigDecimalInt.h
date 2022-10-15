@@ -1,10 +1,14 @@
 
 #ifndef ASSIGNMENT_1_OOP_BIG_DECIMAL_INT_CLASS_H
 #define ASSIGNMENT_1_OOP_BIG_DECIMAL_INT_CLASS_H
+#include <iostream>
+#include <string>
+using namespace std;
+
 class BigDecimalInt {
 private:
     string num;
-    bool sign;
+    bool Sign;
 public:
     BigDecimalInt(string decStr);
     BigDecimalInt(int decInt);
