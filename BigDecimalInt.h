@@ -4,6 +4,7 @@
 class BigDecimalInt {
 private:
     string num;
+    bool sign;
 public:
     BigDecimalInt(string decStr);
     BigDecimalInt(int decInt);
