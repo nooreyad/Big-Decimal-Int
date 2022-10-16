@@ -1,30 +1,20 @@
 #include "BigDecimalInt.h"
 #include<iostream>
 #include <cmath>
+#include<algorithm>
 using namespace std;
 char a =' ';
-int numberOfDigits;
 
 BigDecimalInt::BigDecimalInt(int decInt) {
-    int index=0;
     if( decInt<0){
         decInt*=-1;
         Sign =true;
-        numberOfDigits =int(log10(decInt) + 1);
-        index=numberOfDigits-1;
+        num= to_string(decInt);
     }
     else{
         Sign= false;
-        numberOfDigits =int(log10(decInt) + 1);
-        index= numberOfDigits-1;
-
+        num= to_string(decInt);
     }
-    while(decInt!=0){
-        num[index]='decInt%10';
-        decInt = decInt/10;
-        index--;
-    }
-cout<<num<<endl;
 }
 BigDecimalInt::BigDecimalInt(string decStr) {
     if (decStr[1] == '+' || decStr[1] == '-') {
@@ -39,10 +29,14 @@ BigDecimalInt::BigDecimalInt(string decStr) {
             }
         } else {
             Sign = false;
-            for (int i = 1; i < decStr.size(); i++) {
-                num.push_back(decStr[i]);
+            if(decStr[0]=='+') {
+                for (int i = 1; i < decStr.size(); i++) {
+                    num.push_back(decStr[i]);
+                }
+            }
+            else{
+                num=decStr;
             }
         }
-        cout << num << endl;
     }
 }
