@@ -17,6 +17,7 @@ BigDecimalInt::BigDecimalInt(int decInt) {
         num= to_string(decInt);
     }
 }
+
 BigDecimalInt::BigDecimalInt(string decStr) {
     if (decStr[1] == '+' || decStr[1] == '-') {
         cout<<decStr<<"\n"<<"This input doesn't represent a valid format for the number\nPlease enter the number with only one sign\n";
@@ -39,6 +40,15 @@ BigDecimalInt::BigDecimalInt(string decStr) {
     else{
         num=decStr;
     }
+}
+
+BigDecimalInt& BigDecimalInt::operator= (const BigDecimalInt& anotherDec){
+    if(this == &anotherDec){
+        return *this;
+    }
+    num = anotherDec.num;
+    Sign = anotherDec.Sign;
+    return *this;
 }
 
 bool BigDecimalInt::operator==(BigDecimalInt &anotherDec){
