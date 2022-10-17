@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(){
-    BigDecimalInt str1 = 99697786;
+    BigDecimalInt str1 = 9969778;
     BigDecimalInt str2 = 96987786;
     //BigDecimalInt str3 = "6969786";  //Gives error
     cout << str1 << endl;
