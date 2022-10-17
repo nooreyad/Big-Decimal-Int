@@ -1,9 +1,10 @@
 #include "BigDecimalInt.h"
 #include<iostream>
 #include <cmath>
+#include <cstring>
 #include<algorithm>
 using namespace std;
-char a =' ';
+char a = ' ';
 
 BigDecimalInt::BigDecimalInt(int decInt) {
     if( decInt<0){
@@ -39,4 +40,83 @@ BigDecimalInt::BigDecimalInt(string decStr) {
             }
         }
     }
+}
+
+bool BigDecimalInt::operator==(BigDecimalInt &anotherDec){
+    cout << "operator == called" << endl;
+   if(this->sign() != anotherDec.sign() || this->size() != anotherDec.size()){
+       return false;
+   } else{
+       for (int i = 0; i < anotherDec.size(); ++i) {
+           if(anotherDec.num[i] != this->num[i]){
+               return false;
+           }
+       }
+       return true;
+   }
+}
+
+bool BigDecimalInt::operator> (BigDecimalInt anotherDec) {
+    if (this->sign() == 0 && anotherDec.sign() == 1) {
+        return true;
+    } else if (this->sign() == 1 && anotherDec.sign() == 0) {
+        return false;
+    } else if (this->sign() == 0 && anotherDec.sign() == 0 && this->size() > anotherDec.size()) {
+        return true;
+    } else if (this->sign() == 0 && anotherDec.sign() == 0 && this->size() < anotherDec.size()) {
+        return false;
+    } else if (this->sign() == 0 && anotherDec.sign() == 0 && this->size() == anotherDec.size()) {
+        for (int i = 0; i < anotherDec.size(); ++i) {
+            if (this->num[i] > anotherDec.num[i]) {
+                return true;
+            } else if (this->num[i] < anotherDec.num[i]) {
+                return false;
+            }
+        }
+        return false;
+    } else if (this->sign() == 1 && anotherDec.sign() == 1 && this->size() > anotherDec.size()) {
+        return false;
+    } else if (this->sign() == 1 && anotherDec.sign() == 1 && this->size() < anotherDec.size()) {
+        return true;
+    } else if (this->sign() == 1 && anotherDec.sign() == 1 && this->size() == anotherDec.size()) {
+        for (int i = 0; i < anotherDec.size(); ++i) {
+            if (this->num[i] > anotherDec.num[i]) {
+                return false;
+            } else if (this->num[i] < anotherDec.num[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+
+int BigDecimalInt::size() {
+    int count = 0;
+    for (auto item: num) {
+        count++;
+    }
+    return count;
+}
+
+int BigDecimalInt::sign() {
+    if(Sign){
+        return 1;
+    }else {
+        return 0;
+    }
+}
+
+ostream& operator << (ostream& out, BigDecimalInt& b){
+    if(b.sign()){
+        out << "-";
+        for (auto item: b.num) {
+            out << item;
+        }
+    }else {
+        for (auto item: b.num) {
+            out << item;
+        }
+    }
+    return out;
 }

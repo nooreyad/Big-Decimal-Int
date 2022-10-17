@@ -1,6 +1,6 @@
 
-#ifndef ASSIGNMENT_1_OOP_BIG_DECIMAL_INT_CLASS_H
-#define ASSIGNMENT_1_OOP_BIG_DECIMAL_INT_CLASS_H
+#ifndef BIG_DECIMAL_INT_H
+#define BIG_DECIMAL_INT_H
 #include <iostream>
 #include <string>
 using namespace std;
@@ -15,14 +15,16 @@ public:
     BigDecimalInt operator+(BigDecimalInt anotherDec);
     BigDecimalInt operator- (BigDecimalInt anotherDec);
     bool operator< (BigDecimalInt anotherDec);
-    bool operator==(BigDecimalInt anotherDec);
+    bool operator> (BigDecimalInt anotherDec);
+    bool operator==(BigDecimalInt &anotherDec);
     BigDecimalInt operator= (BigDecimalInt anotherDec);
     int size();
     int sign();
-    friend ostream& operator << (ostream& out, BigDecimalInt b);
+    friend ostream& operator << (ostream& out, BigDecimalInt& b);
 };
 
 
 
 
-#endif //ASSIGNMENT_1_OOP_BIG_DECIMAL_INT_CLASS_H
+
+#endif //BIG_DECIMAL_INT_H
