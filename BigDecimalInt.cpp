@@ -129,3 +129,18 @@ ostream& operator << (ostream& out, BigDecimalInt& b){
     }
     return out;
 }
+
+BigDecimalInt BigDecimalInt::operator+(BigDecimalInt anotherDec) {
+    BigDecimalInt result;
+    int digit1, digit2,sum ,carry;
+    if(this->Sign==anotherDec.Sign && this->size()==anotherDec.size()){
+        for(int i = anotherDec.size(); i>=0;i--){
+            digit1 =anotherDec.num[i]-48;
+            digit2 = this->num[i]-48;
+            sum=digit1+digit2;
+            if(sum%10==sum){
+                result.num[i]=
+            }
+        }
+    }
+}

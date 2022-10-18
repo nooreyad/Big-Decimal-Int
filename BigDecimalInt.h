@@ -10,6 +10,7 @@ private:
     string num;
     bool Sign;
 public:
+    BigDecimalInt();
     BigDecimalInt(string decStr);
     BigDecimalInt(int decInt);
     BigDecimalInt operator+(BigDecimalInt anotherDec);
