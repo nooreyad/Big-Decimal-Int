@@ -13,7 +13,8 @@ public:
     BigDecimalInt();
     BigDecimalInt(string decStr);
     BigDecimalInt(int decInt);
-    BigDecimalInt operator+(BigDecimalInt anotherDec);
+    BigDecimalInt operator+(BigDecimalInt &anotherDec);
+    BigDecimalInt summation(BigDecimalInt &anotherDec);
     BigDecimalInt operator- (BigDecimalInt anotherDec);
     bool operator< (BigDecimalInt anotherDec);
     bool operator> (BigDecimalInt anotherDec);
@@ -23,6 +24,8 @@ public:
     int sign();
     friend ostream& operator << (ostream& out, BigDecimalInt& b);
 };
+
+
 
 
 
