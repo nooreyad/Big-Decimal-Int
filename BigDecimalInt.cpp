@@ -104,9 +104,40 @@ BigDecimalInt BigDecimalInt::operator+(BigDecimalInt &anotherDec) {
 //
 //}
 //
-//bool BigDecimalInt::operator< (BigDecimalInt anotherDec){
-//
-//}
+bool BigDecimalInt::operator< (BigDecimalInt anotherDec){
+    if (this->sign() == 0 && anotherDec.sign() == 1) {
+        return false;
+    } else if (this->sign() == 1 && anotherDec.sign() == 0) {
+        return true;
+    } else if (this->sign() == 0 && anotherDec.sign() == 0 && this->size() < anotherDec.size()) {
+        return true;
+    } else if (this->sign() == 0 && anotherDec.sign() == 0 && this->size() > anotherDec.size()) {
+        return false;
+    } else if (this->sign() == 0 && anotherDec.sign() == 0 && this->size() == anotherDec.size()) {
+        for (int i = 0; i < anotherDec.size(); ++i) {
+            if (this->num[i] < anotherDec.num[i]) {
+                return true;
+            } else if (this->num[i] > anotherDec.num[i]) {
+                return false;
+            }
+        }
+        return false;
+    } else if (this->sign() == 1 && anotherDec.sign() == 1 && this->size() < anotherDec.size()) {
+        return false;
+    } else if (this->sign() == 1 && anotherDec.sign() == 1 && this->size() > anotherDec.size()) {
+        return true;
+    } else if (this->sign() == 1 && anotherDec.sign() == 1 && this->size() == anotherDec.size()) {
+        for (int i = 0; i < anotherDec.size(); ++i) {
+            if (this->num[i] < anotherDec.num[i]) {
+                return false;
+            } else if (this->num[i] > anotherDec.num[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+    return false;
+}
 
 BigDecimalInt& BigDecimalInt::operator= (const BigDecimalInt& anotherDec){
     if(this == &anotherDec){

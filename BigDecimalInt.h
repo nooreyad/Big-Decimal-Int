@@ -1,4 +1,3 @@
-
 #ifndef BIG_DECIMAL_INT_H
 #define BIG_DECIMAL_INT_H
 #include <iostream>
