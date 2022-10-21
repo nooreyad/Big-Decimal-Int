@@ -79,31 +79,126 @@ BigDecimalInt::BigDecimalInt(string decStr) {
 
 BigDecimalInt BigDecimalInt::operator+(BigDecimalInt &anotherDec) {
     BigDecimalInt result;
-    if(this->Sign == anotherDec.Sign && this->size() == anotherDec.size()){
-        return summation(anotherDec);
-    } else if(this->Sign == anotherDec.Sign && this->size() > anotherDec.size()) {
-        int steps = this->size() - anotherDec.size();
-        for (int i = 0; i < steps; i++) {
+    if(this->size() > anotherDec.size()){
+        int diff = this->size() - anotherDec.size();
+        for (int i = 0; i < diff; ++i) {
             anotherDec.num = '0' + anotherDec.num;
         }
-        return summation(anotherDec);
-    } else if(this->Sign == anotherDec.Sign && this->size() < anotherDec.size()) {
-        int steps = anotherDec.size() - this->size();
-        for (int i = 0; i < steps; i++) {
-            this->num = '0' + this->num;
+    } else if(this->size() < anotherDec.size()){
+        int diff = anotherDec.size() - this->size();
+        for (int i = 0; i < diff; ++i) {
+            this->num = '0' +  this->num;
         }
+    }
+    if(this->Sign == anotherDec.Sign){
         return summation(anotherDec);
     }
-//     else if(this->operator>(anotherDec) && this->size() == anotherDec.size()){         // -500 + 250 = 25 - 5      3 + -5 = 3 - 5
-//                                                                                        // -3 + 5 = 5 - 3           5 + -3 = 5 - 3
-//    }
-    return result;
+     else if(this->operator>(anotherDec)){
+        BigDecimalInt changeSign2 = anotherDec;
+        changeSign2.Sign = false;
+        return this->operator-(changeSign2);
+    } else {
+        BigDecimalInt changeSign3 = *this;  // negative + positive == negative - negative
+        changeSign3.Sign = false;
+        return anotherDec.operator-(changeSign3);
+     }
 }
 
-//BigDecimalInt BigDecimalInt::operator- (BigDecimalInt anotherDec){
-//
-//}
-//
+BigDecimalInt BigDecimalInt::operator- (BigDecimalInt anotherDec){      // 100000 000098
+    BigDecimalInt result , temp = *this;
+    if(this->operator==(anotherDec)){
+        result.num = '0';
+        return result;
+    }
+    int digit1, digit2, subtraction;
+    bool remove = false;
+    char to_char;
+    if(this->size() > anotherDec.size()){
+        int diff = this->size() - anotherDec.size();
+        for (int i = 0; i < diff; ++i) {
+            anotherDec.num = '0' + anotherDec.num;
+        }
+    } else if(this->size() < anotherDec.size()){
+        int diff = anotherDec.size() - this->size();
+        for (int i = 0; i < diff; ++i) {
+            this->num = '0' +  this->num;
+        }
+    }
+    if (this->Sign == anotherDec.Sign){
+        if (this->Sign == 0){
+            for(int i = anotherDec.size()-1; i >= 0; i--){
+                if(remove){
+                    this->num[i]--;
+                }
+                digit1 = this->num[i] - 48;
+                digit2 = anotherDec.num[i] - 48;
+                if (digit1 < digit2){
+                    remove = true;
+                    digit1 += 10;
+                    subtraction = digit1 - digit2;
+                    to_char = subtraction + 48;
+                    result.num = to_char + result.num;
+                } else {
+                    remove = false;
+                    subtraction = digit1 - digit2;
+                    to_char = subtraction + 48;
+                    result.num = to_char + result.num;
+                }
+            }
+            *this = temp;
+            if(this->operator>(anotherDec)){
+                return result;
+            } else {
+                BigDecimalInt answer = anotherDec.operator-(*this);
+                answer.Sign = true;
+                return answer;
+            }
+        } else if (this->Sign == 1){            // -999 - -1000 = 999 - 1000
+            BigDecimalInt changeSign4 = *this;
+            BigDecimalInt changeSign3 = anotherDec;
+            changeSign4.Sign = false;
+            changeSign3.Sign = false;
+            if(changeSign3.operator>(changeSign4)){
+                return changeSign3.operator-(changeSign4);
+            } else {
+                BigDecimalInt result;
+                result = changeSign4.operator-(changeSign3);
+                result.Sign = true;
+                return result;
+            }
+
+//            for(int i = anotherDec.size()-1; i >= 0; i--){
+//                if(remove){
+//                    anotherDec.num[i]--;
+//                }
+//                digit1 = anotherDec.num[i] - 48;    // -100
+//                digit2 = this->num[i] - 48;         // -999
+//                if (digit1 < digit2){
+//                    remove = true;
+//                    digit1 += 10;
+//                    subtraction = digit1 - digit2;
+//                    to_char = subtraction + 48;
+//                    result.num = to_char + result.num;
+//                } else {
+//                    remove = false;
+//                    subtraction = digit1 - digit2;
+//                    to_char = subtraction + 48;
+//                    result.num = to_char + result.num;
+//                }
+//            }
+//            *this = temp;
+//            return result;
+        }
+    } else if(this->operator>(anotherDec)){
+        return this->summation(anotherDec);
+    } else {
+        BigDecimalInt changeSign = *this;
+        changeSign.Sign = true;
+        return changeSign.summation(anotherDec);
+    }
+}
+
+
 bool BigDecimalInt::operator< (BigDecimalInt anotherDec){
     if (this->sign() == 0 && anotherDec.sign() == 1) {
         return false;
